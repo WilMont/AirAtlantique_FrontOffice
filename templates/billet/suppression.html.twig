@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Suppression du billet '{{ billet.id }}' pour le vol {{ billet.vol.aeroportDepart.ville }} - {{ billet.vol.aeroportArrivee.ville }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ titre }}</h1>
+    <h4>{{ billet.vol.aeroportDepart.ville }} - {{ billet.vol.aeroportArrivee.ville }} le {{ billet.vol.departTheorique|date('d/m/Y') }}  à {{ billet.vol.departTheorique|date('H:m') }}</h4>
+    <h5>Voulez-vous vraiment supprimer ce billet ?</h2>
+
+    <div class="row">
+        <div class="col s5">
+            {{ form(form) }}
+            </div>
+            <div class="col s5">
+                <form action="{{ path("listeBillets") }}">
+                    <button class="btn btn-secondary blue">Annuler</button>
+                </form>
+            </div>
+        </div>
+    {% endblock %}

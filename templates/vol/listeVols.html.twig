@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    {% block title %}Liste des vols
+    {% endblock %}
+    {% block stylesheets %}
+        <style>
+            nav {
+                background: rgb(0, 0, 0) !important;
+                background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,200,219,1) 1%, rgba(0,112,219,1) 100%) !important;
+            }
+            #btnDeconnexion:hover {
+                background-color: red;
+            }
+            .dropdown-content {
+                width: auto !important;
+            }
+
+            .section {
+                margin: 0 20px;
+            }
+
+            .cercle {
+                background: rgba(0, 200, 219, 1);
+                height: 3px;
+                position: relative;
+                margin-left: 30px;
+                margin-right: 150px;
+            }
+            .cercle:before,
+            .cercle:after {
+                position: absolute;
+                transform: translateY(-50%);
+                content: '';
+                height: 2em;
+                width: 2em;
+                border: 3px solid rgba(0, 200, 219, 1);
+                border-radius: 50%;
+                background: #fff;
+            }
+
+            .cercle:after {
+                left: auto;
+                right: 0;
+            }
+        </style>
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+
+    <h1>Liste des vols</h1>
+
+
+    {% for vol in lesVols %}
+        <div class="card grey white z-depth-3">
+            <div class="section">
+                <h4>Vol
+                    {{ vol.aeroportDepart.ville }}
+                    -
+                    {{ vol.aeroportArrivee.ville }}</h4>
+                <br>
+                <div class="row">
+                    <div class="col s5">{{ vol.aeroportDepart.AITA }}
+                        |
+                        {{ vol.aeroportDepart.ville }}</div>
+                    <div class="col s3 offset-s4">{{ vol.aeroportArrivee.AITA }}
+                        |
+                        {{ vol.aeroportArrivee.ville }}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <div class="cercle"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s1">{{ vol.departTheorique|date('d/m/Y H:m') }}</div>
+                    <div class="col s1 offset-s8">{{ vol.arriveeTheorique|date('d/m/Y H:m') }}</div>
+                </div>
+
+                {% if app.user %}
+                    <div class="row">
+                        <div class="col s11">
+                            {% if vol.prixEco != 0 %}
+                                <a class="btn btn-default blue" href="{{ path('ajouter_billet', { 'idUtilisateur': app.user.id, 'idVol': vol.id, 'prix': vol.prixEco }) }}">
+                                    <i class="material-icons" title="Acheter un billet en classe Eco"></i>
+                                    Tarif Eco:
+                                    {{ vol.prixEco }}€
+                                </a>
+                            {% endif %}
+                            {% if vol.prixBusiness != 0 %}
+                                <a class="btn btn-default blue" href="{{ path('ajouter_billet', { 'idUtilisateur': app.user.id, 'idVol': vol.id, 'prix': vol.prixBusiness }) }}">
+                                    <i class="material-icons" title="Acheter un billet en classe Business"></i>
+                                    Tarif Business:
+                                    {{ vol.prixBusiness }}€
+                                </a>
+                            {% endif %}
+                            {% if vol.prixPremium != 0 %}
+                                <a class="btn btn-default blue" href="{{ path('ajouter_billet', { 'idUtilisateur': app.user.id, 'idVol': vol.id, 'prix': vol.prixPremium }) }}">
+                                    <i class="material-icons" title="Acheter un billet en classe Premium"></i>
+                                    Tarif Premium:
+                                    {{ vol.prixPremium }}€
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if not app.user %}
+                    <div class="row">
+                        <div class="col s11">
+                            {% if vol.prixEco != 0 %}
+                                <a class="btn btn-default blue" href="{{ path("login") }}">
+                                    <i class="material-icons" title="Acheter un billet en classe Eco"></i>
+                                    Tarif Eco:
+                                    {{ vol.prixEco }}€
+                                </a>
+                            {% endif %}
+                            {% if vol.prixBusiness != 0 %}
+                                <a class="btn btn-default blue" href="{{ path("login") }}">
+                                    <i class="material-icons" title="Acheter un billet en classe Business"></i>
+                                    Tarif Business:
+                                    {{ vol.prixBusiness }}€
+                                </a>
+                            {% endif %}
+                            {% if vol.prixPremium != 0 %}
+                                <a class="btn btn-default blue" href="{{ path("login") }}">
+                                    <i class="material-icons" title="Acheter un billet en classe Premium"></i>
+                                    Tarif Premium:
+                                    {{ vol.prixPremium }}€
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

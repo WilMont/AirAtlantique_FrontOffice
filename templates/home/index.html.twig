@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    {% block title %}Air Atlantique
+    {% endblock %}
+    {% block stylesheets %}
+        <style>
+            body {
+                background: #000000 url("https://images.unsplash.com/photo-1527007622069-3a0241e1cd8c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80") no-repeat left top;
+                background-size: cover;
+                color: white;
+            }
+            nav {
+                background: rgb(0, 0, 0) !important;
+                background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,200,219,1) 1%, rgba(0,112,219,1) 100%) !important;
+            }
+            #btnDeconnexion:hover {
+                background-color: red
+            }
+            .dropdown-content {
+                width: auto !important;
+            }
+        </style>
+    {% endblock %}
+{% endblock %}
+{% block body %}
+
+    <h1>Bienvenue sur le site d'Air Atlantique.</h1>
+    <p>Accédez aux vols en cliquant sur "Vols"</p>
+
+{% endblock %}

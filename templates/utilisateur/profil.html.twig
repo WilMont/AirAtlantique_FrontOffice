@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ utilisateur.username }}{% endblock %}
+{% block body %}
+
+    <div class="col s6"><h1>Profil de  {{ utilisateur.username }}</h1></div>
+
+        <div class="section">
+            <h5>Général</h5>
+            <br>
+            <div class="row">
+                <div class="col s2"><b>Nom d'utilisateur:</b></div>
+                <div class="col s2">{{ utilisateur.username }}</div>
+            </div>
+            <div class="row">
+                <div class="col s2"><b>Adresse mail:</b></div>
+                <div class="col s2">{{ utilisateur.email }}</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section">
+            <h5>Informations personnelles</h5>
+            <br>
+            <div class="row">
+                <div class="col s1"><b>Nom:</b></div>
+                <div class="col s3">{{ utilisateur.nom }}</div>
+            </div>
+            <div class="row">
+                <div class="col s1"><b>Prénom:</b></div>
+                <div class="col s3">{{ utilisateur.prenom }}</div>
+            </div>
+            <div class="row">
+                <div class="col s2"><b>Date de naissance:</b></div>
+                <div class="col s3">{{ utilisateur.dateNaissance|date('d/m/Y') }}</div>
+            </div>
+            <div class="row">
+                <div class="col s3"><b>Numéro de téléphone:</b></div>
+                <div class="col s3">{{ utilisateur.numeroTelephone }}</div>
+            </div>
+            <div class="row">
+                <div class="col s1"><b>Pays:</b></div>
+                <div class="col s3">{{ utilisateur.pays }}</div>
+            </div>
+            <div class="row">
+                <div class="col s1"><b>Adresse:</b></div>
+                <div class="col s3">{{ utilisateur.adresse }}</div>
+            </div>
+            <div class="row">
+                <div class="col s1"><b>Ville:</b></div>
+                <div class="col s3">{{ utilisateur.ville }}</div>
+            </div>
+            <div class="row">
+                <div class="col s2"><b>Code postal:</b></div>
+                <div class="col s3">{{ utilisateur.codePostal }}</div>
+            </div>
+        </div>
+        <div class="divider"></div>
+
+<br>
+
+{% endblock %}

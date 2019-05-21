@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    {% block title %}Mes billets
+    {% endblock %}
+    {% block stylesheets %}
+        <style>
+            nav {
+                background: rgb(0, 0, 0) !important;
+                background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,200,219,1) 1%, rgba(0,112,219,1) 100%) !important;
+            }
+            #btnDeconnexion:hover {
+                background-color: red;
+            }
+            .dropdown-content {
+                width: auto !important;
+            }
+
+            .section {
+                margin: 0 20px;
+            }
+
+            #textEco {
+                font: italic small-caps bold 16px / 2 cursive;
+            }
+            #textBusiness {
+                font: small-caps bold 24px / 1 sans-serif;
+            }
+            #textPremium {
+                font: italic 1.2em "Fira Sans", serif;
+            }
+
+            .hrBillet {
+                border-style: dashed;
+            }
+        </style>
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+
+    <h1>Mes billets</h1>
+
+
+    {% for billet in lesBillets %}
+        {% if app.user.username == billet.utilisateur.username  %}
+            <div class="card deep-orange lighten-4 z-depth-3">
+                <div class="section">
+                    <hr class="hrBillet">
+                    <div class="row">
+                        <div class="col s10">
+                            <h4>Vol
+                                {{ billet.vol.aeroportDepart.ville }}
+                                -
+                                {{ billet.vol.aeroportArrivee.ville }}</h4>
+                        </div>
+                        <div class="col s1">
+                            {% if billet.prix == billet.vol.prixEco  %}
+                                <h4 id="textEco">Eco</h4>
+                            {% endif %}
+                            {% if billet.prix == billet.vol.prixBusiness  %}
+                                <h4 id="textBusiness">Business</h4>
+                            {% endif %}
+                            {% if billet.prix == billet.vol.prixPremium  %}
+                                <h4 id="textPremium">Premium</h4>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col s3">
+                            <b>Aéroport de départ:</b>
+                        </div>
+                        <div class="col s3">{{ billet.vol.aeroportDepart.AITA }}
+                            |
+                            {{ billet.vol.aeroportDepart.ville }}</div>
+                        <div class="col s2">
+                            <b>Aéroport d'arrivée:</b>
+                        </div>
+                        <div class="col s4">{{ billet.vol.aeroportArrivee.AITA }}
+                            |
+                            {{ billet.vol.aeroportArrivee.ville }}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s1">
+                            <b>Départ:</b>
+                        </div>
+                        <div class="col s3">{{ billet.vol.departTheorique|date('d/m/Y H:m') }}</div>
+                        <div class="col s1 offset-s2">
+                            <b>Arrivée:</b>
+                        </div>
+                        <div class="col s3">{{ billet.vol.arriveeTheorique|date('d/m/Y H:m') }}</div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col s1">
+                            <b>Nom:</b>
+                        </div>
+                        <div class="col s2">{{ app.user.nom }}</div>
+                        <div class="col s2 offset-s3">
+                            <b>Numéro billet:</b>
+                        </div>
+                        <div class="col s2">{{ billet.id }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s1">
+                            <b>Prénom:</b>
+                        </div>
+                        <div class="col s2">{{ app.user.prenom }}</div>
+                        <div class="col s1 offset-s3">
+                            <b>Prix:</b>
+                        </div>
+                        <div class="col s2">{{ billet.prix }}€</div>
+                    </div>
+                    <hr class="hrBillet">
+
+                    <a class="btn btn-default red" href="{{ path("supprimer_billet",{"idBillet":billet.id}) }}">
+                        <i class="material-icons" title="Supprimer ce billet">delete</i>
+                    </a>
+
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

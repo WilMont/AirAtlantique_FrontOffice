@@ -1,0 +1,104 @@
+{# templates/base.html.twig #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}AirAtlantique - Accueil
+            {% endblock %}
+        </title>
+
+        <!-- Compiled and minified CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+        <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta
+        content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        {% block stylesheets %}
+            <style>
+                nav {
+                    background: rgb(0, 0, 0) !important;
+                    background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,200,219,1) 1%, rgba(0,112,219,1) 100%) !important;
+                }
+                #btnDeconnexion:hover {
+                    background-color: red
+                }
+                .dropdown-content {
+                    width: auto !important;
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body>
+
+        <nav>
+            <div class="nav-wrapper">
+                <a href="{{ path("home") }}" class="brand-logo center">Air Atlantique</a>
+                <ul class="left hide-on-med-and-down" id="nav-mobile">
+                    <li>
+                        <a href="{{ path("listeVols") }}">Vols<i class="material-icons right">flight</i>
+                        </a>
+                    </li>
+                </ul>
+
+                {% if not app.user %}
+                    <ul class="right hide-on-med-and-down" id="nav-mobile">
+                        <li>
+                            <a href="{{ path("login") }}">Se Connecter</a>
+                        </li>
+                        <li>
+                            <a href="{{ path("register") }}">S'inscrire</a>
+                        </li>
+                    </ul>
+                {% endif %}
+
+                {% if app.user %}
+                    <ul class="right hide-on-med-and-down" id="nav-mobile">
+                        <li>
+                            <!-- Dropdown Trigger -->
+                            <a class='dropdown-trigger' data-target='dropdown-user' href='#'>{{ app.user.username }}<i class="material-icons right">person</i>
+                            </a>
+
+                            <!-- Dropdown Structure -->
+                            <ul class='dropdown-content' id='dropdown-user'>
+                                <li>
+                                    <a href="{{ path('profil', { 'id_utilisateur': app.user.id }) }}">Mon profil<i class="material-icons right">person</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path("listeBillets") }}">Mes billets<i class="material-icons right">card_travel</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="btnDeconnexion">
+                            <a href="{{ path("logout") }}">Se déconnecter<i class="material-icons right">power_settings_new</i>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+
+
+            </div>
+
+        </nav>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            <script>
+                M.AutoInit();
+                document.addEventListener('DOMContentLoaded', function () {
+                    var elems = document.querySelectorAll('.dropdown-trigger');
+                    var instances = M.Dropdown.init(elems, options);
+                });
+            </script>
+        {% endblock %}
+    </body>
+</html>
